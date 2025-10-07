@@ -1,11 +1,12 @@
-import React from 'react';
 import { Link } from 'react-router';
 import ProductCard from '../Components/ProductCard';
 import useProducts from '../Hooks/useProducts';
 
 const Home = () => {
 
-    const {products, loading, error} = useProducts()
+
+    const { products, loading, error } = useProducts()
+
     const featuredProducts = products.slice(0, 6)
 
     return (
