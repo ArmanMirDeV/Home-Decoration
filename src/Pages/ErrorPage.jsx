@@ -1,11 +1,9 @@
 import React from 'react';
+import { useRouteError } from 'react-router';
 
 const ErrorPage = () => {
-    return (
-        <div>
-            <h1>404: Not Found</h1>
-        </div>
-    );
+    const error = useRouteError();
+    return <div> <h2>Error</h2> {error.message}</div>;
 };
 
 export default ErrorPage;
