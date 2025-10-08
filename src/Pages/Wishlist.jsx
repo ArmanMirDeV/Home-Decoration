@@ -12,6 +12,7 @@ const Wishlist = () => {
         if (savedList) setWishlist(savedList)
     }, [])
 
+    if(!wishlist.length) return <p className='font-black text-3xl text-red-300'>Please Select For Your Wishlist</p>
 
     const sortedItem = (
         () => {
@@ -29,9 +30,6 @@ const Wishlist = () => {
 
 
 
-
-
-
     const handleRemove = (id) => {
 
         const existingList = JSON.parse(localStorage.getItem('Wishlist'))
@@ -46,7 +44,23 @@ const Wishlist = () => {
 
     }
 
+    // generate chart data
 
+    const totalsByCategory = {}
+    wishlist.forEach(product => {
+        const category = product.category
+
+        totalsByCategory[category] = 
+        (totalsByCategory[category] || 0) + product.price
+    })
+
+    const chartData = Object.keys(totalsByCategory).map(category => ({
+        category,
+        total: totalsByCategory[category] 
+    }))
+
+
+console.log(chartData);
 
 
     return (
@@ -87,7 +101,7 @@ const Wishlist = () => {
                             <div className='pr-4 flex items-center gap-3'>
                                 <div className='font-semibold'>${p.price}</div>
 
-                                <button onClick={() => handleRemove(p.id)} className='bt btn-outline'> Remove</button>
+                                <button onClick={() => handleRemove(p.id)} className='bt btn-outline hover:bg-pink-200 rounded-lg p-2 cursor-pointer'> Remove</button>
                             </div>
                         </div>
 
@@ -105,7 +119,7 @@ const Wishlist = () => {
                         <BarChart
                             width={500}
                             height={300}
-                            data={wishlist}
+                            data={chartData}
                             margin={{
                                 top: 5,
                                 right: 30,
@@ -118,7 +132,7 @@ const Wishlist = () => {
                             <YAxis />
                             <Tooltip />
                             <Legend />
-                            <Bar dataKey="price" fill='#82ca9d' activeBar={<Rectangle fill="gold" stroke="purple" />} />
+                            <Bar dataKey="total" fill='#82ca9d' activeBar={<Rectangle fill="gold" stroke="purple" />} />
                         </BarChart>
                     </ResponsiveContainer>
 
