@@ -2,9 +2,10 @@ import React, { useState } from 'react';
 import useProducts from '../Hooks/useProducts';
 import ProductCard from '../Components/ProductCard';
 import { Link } from 'react-router';
+import SkeletonLoader from '../Components/SkeletonLoader';
 
 const Products = () => {
-    const { products } = useProducts();
+    const { products, loading } = useProducts();
     const [search, setSearch] = useState('');
     const term = search.trim().toLowerCase()
 
@@ -27,13 +28,15 @@ const Products = () => {
                         placeholder="Search Products" />
                 </label>
             </div>
-            <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4' >
-                {
-                    searchedProducts.map(product =>
-                        <ProductCard product={product} key={product.id} ></ProductCard>
-                    )
-                }
-            </div>
+            {
+                loading ? <SkeletonLoader count={16} /> : (<div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4' >
+                    {
+                        searchedProducts.map(product =>
+                            <ProductCard product={product} key={product.id} ></ProductCard>
+                        )
+                    }
+                </div>)
+            }
         </div>
     );
 };
