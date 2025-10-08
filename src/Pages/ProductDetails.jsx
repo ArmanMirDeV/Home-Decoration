@@ -11,7 +11,7 @@ const ProductDetails = () => {
 
 
     const product = products.find(p => p.id === Number(id));
-    console.log(product);
+    // console.log(product);
     if (!product) {
         return <p>Product not found.</p>;
     }
@@ -21,6 +21,27 @@ const ProductDetails = () => {
 
     const { name, image, material, price, description, category, dimension } = product;
 
+
+    const handleAddToWishlist = () =>{
+
+        const existingList = JSON.parse(localStorage.getItem('Wishlist'))
+
+        let updatedList = []
+
+        if(existingList){
+            const isDuplicate =  existingList.some(p => p.id === product.id)
+
+            if(isDuplicate) return alert ("Sorry Vai")
+
+            updatedList = [...existingList, product]
+        }
+        else{
+            updatedList.push(product)
+        }
+
+        localStorage.setItem('Wishlist', JSON.stringify(updatedList))
+
+    }
 
 
     return (
@@ -40,7 +61,7 @@ const ProductDetails = () => {
                     <p>Price: $ {price} </p>
                 </div>
                 <div className="card-actions justify-between mt-2">
-                    <button className="btn btn-active">Add to Wishlist</button>
+                    <button onClick={handleAddToWishlist} className="btn btn-active">Add to Wishlist</button>
                     <button className="btn btn-primary">Buy Now</button>
                 </div>
             </div>
