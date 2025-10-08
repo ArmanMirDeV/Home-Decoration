@@ -22,20 +22,20 @@ const ProductDetails = () => {
     const { name, image, material, price, description, category, dimension } = product;
 
 
-    const handleAddToWishlist = () =>{
+    const handleAddToWishlist = () => {
 
         const existingList = JSON.parse(localStorage.getItem('Wishlist'))
 
         let updatedList = []
 
-        if(existingList){
-            const isDuplicate =  existingList.some(p => p.id === product.id)
+        if (existingList) {
+            const isDuplicate = existingList.some(p => p.id === product.id)
 
-            if(isDuplicate) return alert ("Sorry Vai")
+            if (isDuplicate) return alert("Sorry Vai")
 
             updatedList = [...existingList, product]
         }
-        else{
+        else {
             updatedList.push(product)
         }
 
