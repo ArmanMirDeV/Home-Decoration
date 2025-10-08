@@ -1,6 +1,8 @@
 
 // get
 
+import { toast } from "react-toastify"
+
 export const loadWishlist = () => {
     try {
         const data = localStorage.getItem('wishlist')
@@ -16,10 +18,12 @@ export const loadWishlist = () => {
 
 export const updateList = (product) => {
     const wishlist = loadWishlist()
+      
 
     try {
         const isDuplicate = wishlist.some(p => p.id === product.id)
-        if (isDuplicate) return alert('Already added in Wishlist')
+        if(!isDuplicate) return toast("Added To Wishlist!");
+        if (isDuplicate) return toast('Already added in Wishlist')
 
         const updatedWishlist = [...wishlist, product]
 

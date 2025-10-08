@@ -2,8 +2,11 @@ import React from 'react';
 import { useParams } from 'react-router';
 import useProducts from '../Hooks/useProducts';
 import { updateList } from '../Utils/LocalStorage';
+import { ToastContainer} from 'react-toastify';
 
 const ProductDetails = () => {
+
+   
 
     const { id } = useParams()
 
@@ -62,8 +65,10 @@ const ProductDetails = () => {
                     <p>Price: $ {price} </p>
                 </div>
                 <div className="card-actions justify-between mt-2">
-                    <button onClick={() => updateList(product)} className="btn btn-active">Add to Wishlist</button>
+                    <button  onClick={() => updateList(product)} className="btn btn-active">Add to Wishlist</button>
                     <button className="btn btn-primary">Buy Now</button>
+                    <ToastContainer />
+
                 </div>
             </div>
         </div>
