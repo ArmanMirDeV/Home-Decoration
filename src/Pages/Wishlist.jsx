@@ -3,6 +3,7 @@ import React, { useEffect, useState } from 'react';
 const Wishlist = () => {
 
     const [wishlist, setWishlist] = useState([]);
+    const [sortOrder, setSortOrder] = useState('none')
 
     useEffect(() => {
         const savedList = JSON.parse(localStorage.getItem('Wishlist'))
@@ -19,7 +20,14 @@ const Wishlist = () => {
                     <span className='text-sm text-gray-600' >({wishlist.length}) Products Found</span>
                 </h1>
 
-                <button className='btn btn-primary' >Sort</button>
+                <label  className='form-control w-full max-w-xs'>
+                    <select className='select select-bordered' value={sortOrder} onChange={e => setSortOrder(e.target.value)}>
+                        <option  value="None">Sort By Price</option>
+                        <option value="price-asc">Low-&gt;High</option>
+                        <option value="price-desc">High-&gt;Low</option>
+
+                    </select>
+                </label>
 
             </div>
 
