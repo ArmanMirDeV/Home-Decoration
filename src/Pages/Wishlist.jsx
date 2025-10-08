@@ -11,18 +11,35 @@ const Wishlist = () => {
         if (savedList) setWishlist(savedList)
     }, [])
 
+
+    const sortedItem = (
+        () => {
+            if (sortOrder === 'price-asc') {
+                return [...wishlist].sort((a, b) => a.price - b.price)
+            }
+            else if (sortOrder === 'price-desc') {
+                return [...wishlist].sort((a, b) => b.price - a.price)
+            }
+            else {
+                return wishlist
+            }
+        }
+    )()
+
+
+
     return (
         <div className='space-y-6 ' >
             <div className='flex justify-between py-5 items-center ' >
                 <h1
                     className='text-3xl font-semibold' >
                     <span>Wishlist </span>
-                    <span className='text-sm text-gray-600' >({wishlist.length}) Products Found</span>
+                    <span className='text-sm text-gray-600' >({sortedItem.length}) Products Found</span>
                 </h1>
 
-                <label  className='form-control w-full max-w-xs'>
+                <label className='form-control w-full max-w-xs'>
                     <select className='select select-bordered' value={sortOrder} onChange={e => setSortOrder(e.target.value)}>
-                        <option  value="None">Sort By Price</option>
+                        <option value="None">Sort By Price</option>
                         <option value="price-asc">Low-&gt;High</option>
                         <option value="price-desc">High-&gt;Low</option>
 
@@ -33,7 +50,7 @@ const Wishlist = () => {
 
             <div className='space-y-3'>
                 {
-                    wishlist.map(p =>
+                    sortedItem.map(p =>
                         <div key={p.id} className='card card-side bg-base-100 shadow border'>
                             <figure>
                                 <img
