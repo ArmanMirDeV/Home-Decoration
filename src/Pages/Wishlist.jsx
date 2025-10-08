@@ -1,16 +1,12 @@
-import React, { useEffect, useState } from 'react';
+import React, {  useState } from 'react';
 import { Bar, BarChart, CartesianGrid, Legend, Rectangle, ResponsiveContainer, Tooltip, XAxis, YAxis } from 'recharts';
+import { loadWishlist, removeFromWishlist } from '../Utils/LocalStorage';
 
 const Wishlist = () => {
 
-    const [wishlist, setWishlist] = useState([]);
+    const [wishlist, setWishlist] = useState(() => loadWishlist());
     const [sortOrder, setSortOrder] = useState('none')
 
-    useEffect(() => {
-        const savedList = JSON.parse(localStorage.getItem('Wishlist'))
-
-        if (savedList) setWishlist(savedList)
-    }, [])
 
     if(!wishlist.length) return <p className='font-black text-3xl text-red-300'>Please Select For Your Wishlist</p>
 
@@ -32,16 +28,10 @@ const Wishlist = () => {
 
     const handleRemove = (id) => {
 
-        const existingList = JSON.parse(localStorage.getItem('Wishlist'))
-
-        let updatedList = existingList.filter(p => p.id !== id)
+        //remove from local storage
+        removeFromWishlist(id)
         // for ui instance update
-        setWishlist(updatedList)
-
-
-        localStorage.setItem('Wishlist', JSON.stringify(updatedList))
-
-
+        setWishlist(prev => prev.filter(p => p.id !== id) )
     }
 
     // generate chart data
@@ -60,7 +50,7 @@ const Wishlist = () => {
     }))
 
 
-console.log(chartData);
+// console.log(chartData);
 
 
     return (
