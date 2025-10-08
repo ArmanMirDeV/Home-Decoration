@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import { Bar, BarChart, CartesianGrid, Legend, Rectangle, ResponsiveContainer, Tooltip, XAxis, YAxis } from 'recharts';
 
 const Wishlist = () => {
 
@@ -25,6 +26,26 @@ const Wishlist = () => {
             }
         }
     )()
+
+
+
+
+
+
+    const handleRemove = (id) => {
+
+        const existingList = JSON.parse(localStorage.getItem('Wishlist'))
+
+        let updatedList = existingList.filter(p => p.id !== id)
+        // for ui instance update
+        setWishlist(updatedList)
+
+
+        localStorage.setItem('Wishlist', JSON.stringify(updatedList))
+
+
+    }
+
 
 
 
@@ -65,12 +86,8 @@ const Wishlist = () => {
                             </div>
                             <div className='pr-4 flex items-center gap-3'>
                                 <div className='font-semibold'>${p.price}</div>
-                                <button
 
-                                    className='btn btn-outline'
-                                >
-                                    Remove
-                                </button>
+                                <button onClick={() => handleRemove(p.id)} className='bt btn-outline'> Remove</button>
                             </div>
                         </div>
 
@@ -79,8 +96,39 @@ const Wishlist = () => {
             </div>
 
 
+            {/* chart */}
+
+            <div className='space-y-3'>
+                <h3 className='text-xl font-bold'> Wishlist Summery</h3>
+                <div className='bg-base-100 border rounded-xl h-80 p-4'>
+                    <ResponsiveContainer width="100%" height="100%">
+                        <BarChart
+                            width={500}
+                            height={300}
+                            data={wishlist}
+                            margin={{
+                                top: 5,
+                                right: 30,
+                                left: 20,
+                                bottom: 5,
+                            }}
+                        >
+                            <CartesianGrid strokeDasharray="3 3" />
+                            <XAxis dataKey="category" />
+                            <YAxis />
+                            <Tooltip />
+                            <Legend />
+                            <Bar dataKey="price" fill='#82ca9d' activeBar={<Rectangle fill="gold" stroke="purple" />} />
+                        </BarChart>
+                    </ResponsiveContainer>
+
+                </div>
+            </div>
+
         </div>
     );
 };
 
 export default Wishlist;
+
+
