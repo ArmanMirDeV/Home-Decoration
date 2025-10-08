@@ -22,8 +22,9 @@ export const updateList = (product) => {
 
     try {
         const isDuplicate = wishlist.some(p => p.id === product.id)
-        if(!isDuplicate) return toast("Added To Wishlist!");
+        
         if (isDuplicate) return toast('Already added in Wishlist')
+         toast("Added To Wishlist!");
 
         const updatedWishlist = [...wishlist, product]
 
